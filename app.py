@@ -1,5 +1,6 @@
 import pandas as pd
-nomi_validi=['nizar','lion','alex','Nizar','Alex','Lion']
+nomi_validi=['nizar','lion','alex','Nizar','Alex','Lion','nesti','Nesti']
+import sqlite3 as sq
 import streamlit as st
 import os as os
 from datetime import datetime as dt
@@ -60,7 +61,7 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
     if st.sidebar.button('torna alla home'):
         if st.button("🏠 Torna alla Home", use_container_width=True):
             st.rerun()
-    tab1,tab2=st.tabs(['Home','Ruoli'])
+    tab1,tab2,tab3=st.tabs(['Home','Ruoli','Argomenti e Fonti'])
     with tab1:
         st.title('questo è il sito per grindare e raggiungere i nostri obiettivi!!')
         st.subheader('questo sito è stato creato da me per voi due')
@@ -117,21 +118,45 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
             st.header('ecco i ruoli di ciascuno noi nel grind:')
             col1,col2,col3=st.columns(3)
             with col1:
-                  st.subheader('L')
+                  st.subheader('Lion')
                   with st.container(border=True):
                     st.write('1. Programmatore')
                     st.write('2. Marketing')
                     st.write('3. Analisi e crescita')
             with col2:
-                st.subheader('N')
+                st.subheader('Nizar')
                 with st.container(border=True):
                     st.write('1. Social media manager')
                     st.write('2. Aiuto programmatore')
                     st.write('3. Grafica ')
             with col3:
-                 st.subheader('A')
+                 st.subheader('Alex')
                  with st.container(border=True):
                     st.write('1. Programmatore main')       
                     st.write('2. Backend developer')
                     st.write('3. Sicurezza')
+        with tab3:
+            col_argomenti,col_fonti=st.columns(2)
+            st.header('Argomenti e Fonti per Nizar')
+            with col_argomenti:
+                st.subheader('questi sono gli argomenti')
+                st.markdown('le cose che devi imparare adesso, sono poche ma impareremo di più più avanti')
+                with st.container(border=True):
+                    st.write('''1. **figma**: Creazione di Wireframe, Prototipi interattivi e Design System 
+                    (librerie di componenti riutilizzabili come bottoni, card, palette).''')
+                    st.write('2. **canva**: Saper fare grafiche')
+                    st.write('3. **HTML e CSS**')
+                    st.write('4. **Framer/Webflow**')
+            with col_fonti:
+                st.subheader('Fonti per imparare')
+                st.markdown('ogni numero nelle fonti equivale alla fonte di un argomento')
+                with st.container(border=True):
+                    st.write('1. Figma, il canale ufficiale youtube e learn.figma.com ')
+                    st.write('2. Canva Design School')
+                    st.write('3. Kevin Powell su youtube e freecodecamp.org')
+                    st.write('4. Framer(canale ufficiale) e Webflow university entrambi su youtube')
+
+                
+            
+
 
