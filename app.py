@@ -61,7 +61,7 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
     if st.sidebar.button('torna alla home'):
         if st.button("🏠 Torna alla Home", use_container_width=True):
             st.rerun()
-    tab1,tab2,tab3=st.tabs(['Home','Ruoli','Argomenti e Fonti'])
+    tab1,tab2,tab_Niz,tab_Alex=st.tabs(['Home','Ruoli','Programma di Nizar','Programma di Alex'])
     with tab1:
         st.title('questo è il sito per grindare e raggiungere i nostri obiettivi!!')
         st.subheader('questo sito è stato creato da me per voi due')
@@ -135,11 +135,11 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
                     st.write('1. Programmatore main')       
                     st.write('2. Backend developer')
                     st.write('3. Sicurezza')
-        with tab3:
+        with tab_Niz:
             col_argomenti,col_fonti=st.columns(2)
             st.header('Argomenti e Fonti per Nizar')
             with col_argomenti:
-                st.subheader('questi sono gli argomenti')
+                st.subheader('questi sono gli argomenti di Nizar')
                 st.markdown('le cose che devi imparare adesso, sono poche ma impareremo di più più avanti')
                 with st.container(border=True):
                     st.write('''1. **figma**: Creazione di Wireframe, Prototipi interattivi e Design System 
@@ -155,8 +155,39 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
                     st.write('2. Canva Design School')
                     st.write('3. Kevin Powell su youtube e freecodecamp.org')
                     st.write('4. Framer(canale ufficiale) e Webflow university entrambi su youtube')
-
+        with tab_Alex:
+            col_argomenti1,col_fonti1=st.columns(2)
+            with col_argomenti1:
+                st.subheader('Questi sono gli argomenti di Alex')
+                st.markdown('le cose che devi imparare adesso, ne aggiungeremo di più più avanti')
+                with st.container(border=True):
+                    st.write('1. **Python**: devi finire Python')
+                    with st.expander('argomenti di Python'):
+                        with st.container(border=True):
+                            st.write('1. Api: come comunicano server e computer')
+                            st.write('2. Web scraping: ottenere informazioni da siti web')
+                            st.write('3. Pandas e analisi: filtraggio CSV e JSON')
+                            st.write('4. Database SQL')
+                            st.write('5. webhooks: fastAPi')
+                            st.write('6.Django')
+                    with st.container(border=True):
+                        st.write('2. Node.js (javascript/typescript)')
+                        st.write('3. GO')
+                        st.write('4. JWT & OAuth2')
+                        st.subheader('questi qua gli dovrai imparare solo dopo aver masterato python')
+            with col_fonti1:
+                st.subheader('queste sono le fonti')
+                st.markdown('ogni numero qua equivale al numero di argomento')
+                with st.container(border=True):
+                    st.write('1. Python')
+                    with st.expander('clicca per vedere python'):
+                        st.write('1. API: "request data using python" di Bro Code su youtube e automate the boring stuff') 
+                        st.write('2. Web Scraping: automate the boring stuff e "Scraping Data from a Real website" di Alex the analyst su yt')
+                        st.write('3. Pandas: "learn pandas in 30 minutes" di tech with tim e ti manderò anche io dei tutorial')
+                        st.write('4. "Learn SQL beginner to advanced" di Alex the analyst o "Database SQLite con Python" di freecodecamp.org')
+                        st.write('5. "fast APi course for beginners" di freecodecamp.org su yt')
+                        st.write('6. "learn Django in 20 minutes" di Tech with Tim su yt')
+                        st.warning('il resto te lo darò quando hai finito questi su che ci vogliono almeno 3 mesi')                  
                 
-            
 
 
