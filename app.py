@@ -3,8 +3,56 @@ nomi_validi=['nizar','lion','alex','Nizar','Alex','Lion','nesti','Nesti']
 import sqlite3 as sq
 import streamlit as st
 import os as os
-from datetime import datetime as dt
+from datetime import datetime
 import base64
+import time
+
+
+def mostra_countdown_grindhub_live():
+  placeholder = st.empty()
+
+  while True:
+    with placeholder.container():
+      conn = sq.connect("grindhub.db")
+      curs = conn.cursor()
+
+      # 1. Abbiamo aggiunto 'utente' nella SELECT
+      curs.execute(
+          "SELECT utente, argomento, data_scadenza FROM scaletta_argomenti"
+          " WHERE completato = 0"
+      )
+      missioni = curs.fetchall()
+      conn.close()
+
+      now = datetime.now()
+
+      st.subheader("⏳ GRIND HUB - COUNTDOWN LIVE")
+
+      if not missioni:
+        st.info("Nessuna missione attiva al momento!")
+      else:
+        # 2. Estraiamo anche la variabile 'utente'
+        for utente, argomento, data_scadenza_str in missioni:
+          scadenza = datetime.strptime(data_scadenza_str, "%Y-%m-%d %H:%M:%S")
+          rimanente = scadenza - now
+
+          if rimanente.total_seconds() > 0:
+            giorni = rimanente.days
+            ore = rimanente.seconds // 3600
+            minuti = (rimanente.seconds % 3600) // 60
+            secondi = rimanente.seconds % 60
+
+            # Formattazione pulita: [NOME] Argomento ➔ Tempo
+            st.write(
+                f"👤 **[{utente.upper()}]** {argomento} ➔ Mancano **{giorni}d"
+                f" {ore}h {minuti}m {secondi}s**"
+            )
+          else:
+            st.error(f"🚨 **[{utente.upper()}]** {argomento} ➔ TEMPO SCADUTO!")
+
+      st.markdown("---")
+
+    time.sleep(1)
 if 'step' not in st.session_state:
     st.session_state.step=1
 if st.session_state.step==1:
@@ -61,7 +109,7 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
     if st.sidebar.button('torna alla home'):
         if st.button("🏠 Torna alla Home", use_container_width=True):
             st.rerun()
-    tab1,tab2,tab_Niz,tab_Alex=st.tabs(['Home','Ruoli','Programma di Nizar','Programma di Alex'])
+    tab1,tab2,tab_Niz,tab_Alex,tab_timer=st.tabs(['Home','Ruoli','Programma di Nizar','Programma di Alex','Obiettivi settimanali'])
     with tab1:
         st.title('questo è il sito per grindare e raggiungere i nostri obiettivi!!')
         st.subheader('questo sito è stato creato da me per voi due')
@@ -142,18 +190,17 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
                 st.subheader('questi sono gli argomenti di Nizar')
                 st.markdown('le cose che devi imparare adesso, sono poche ma impareremo di più più avanti')
                 with st.container(border=True):
-                    st.write('''1. **figma**: Creazione di Wireframe, Prototipi interattivi e Design System 
-                    (librerie di componenti riutilizzabili come bottoni, card, palette).''')
+                    st.write('''1. **HTML e CSS**: Creazione di Wireframe, Prototipi interattivi e D.''')
                     st.write('2. **canva**: Saper fare grafiche')
-                    st.write('3. **HTML e CSS**')
+                    st.write('3. **Figma**: Creazione di Wireframe, Prototipi interattivi e Design System ')
                     st.write('4. **Framer/Webflow**')
             with col_fonti:
                 st.subheader('Fonti per imparare')
                 st.markdown('ogni numero nelle fonti equivale alla fonte di un argomento')
                 with st.container(border=True):
-                    st.write('1. Figma, il canale ufficiale youtube e learn.figma.com ')
+                    st.write('1. "HTML and CSS full  course for free" di Bro Code o "HTML and CSS full course" di Super Simple dev e freecodecamp.org ')
                     st.write('2. Canva Design School')
-                    st.write('3. Kevin Powell su youtube e freecodecamp.org')
+                    st.write('3. Figma, il canale ufficiale youtube e learn.figma.com ')
                     st.write('4. Framer(canale ufficiale) e Webflow university entrambi su youtube')
         with tab_Alex:
             col_argomenti1,col_fonti1=st.columns(2)
@@ -187,7 +234,23 @@ elif st.session_state.step==2: #step 2. TUTTO CIò CHE VIENE DOPO LA NIGGA PASSO
                         st.write('4. "Learn SQL beginner to advanced" di Alex the analyst o "Database SQLite con Python" di freecodecamp.org')
                         st.write('5. "fast APi course for beginners" di freecodecamp.org su yt')
                         st.write('6. "learn Django in 20 minutes" di Tech with Tim su yt')
-                        st.warning('il resto te lo darò quando hai finito questi su che ci vogliono almeno 3 mesi')                  
+                        st.warning('il resto te lo darò quando hai finito questi su che ci vogliono almeno 3 mesi')                 
+        with tab_timer:
+            
+            st.subheader('Questa è la pagina degli obiettivi settimanali per stare sempre in ritmo')
+            st.markdown('ecco gli argomenti da studiare per questa settimana:')
+            with st.expander('visualizza gli argomenti da studiare:'):
+                st.write('questi sono gli argomenti da studiare')
+            st.markdown('ecco gli obiettivi settimanali di noi 3')
+            st.write(f'tempo rimasto: {mostra_countdown_grindhub_live()}')
+            col_ob_lion,col_ob_alex,col_ob_nizar=st.columns(3)
+            from datetime import datetime
+
+            with col_ob_lion:
+                st.write('obiettivi, ecc')
+
+
+
                 
 
 
